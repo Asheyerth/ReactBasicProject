@@ -1,0 +1,13 @@
+/* Reset default margin/padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Full-page container */
+.app {
+  width: 100vw;
+  height: 100vh;
+  background-color: white; /* or any color you prefer */
+}
