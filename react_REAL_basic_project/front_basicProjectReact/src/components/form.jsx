@@ -3,7 +3,7 @@ import List from './list';
 import { useSelector, useDispatch } from 'react-redux'
 import { addListItem, deleteListItem} from '../store/listSlice' //Import functions from the SLice
 import { useState, useRef } from 'react'
-import {llamadoHTTP} from '../conection/request'
+import {llamadoHTTP} from '../conection/requestNative'
 
 function Form() {
     const formRef = useRef(null) //To handle inner data from the form and to no recharge the page
@@ -23,7 +23,8 @@ function Form() {
 
             console.log(formData)
 
-            await llamadoHTTP(formData.get('insertedName')) //Send the data to the backend using fetch
+           //Send the data to the backend using fetch
+            fetch('/addList', { method: 'POST', body: formData.get('insertedName') }); 
         }
 
     }

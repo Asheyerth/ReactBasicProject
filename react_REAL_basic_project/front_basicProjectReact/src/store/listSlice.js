@@ -10,6 +10,7 @@ export const listSlice = createSlice({
   reducers: { //métodos del objeto
     addListItem: (state, action) => {
       state.value.push(action.payload)
+      console.log("state.value: ", state.value)
     },
     deleteListItem: (state, action) => {
       state.value.pop(action.payload)
