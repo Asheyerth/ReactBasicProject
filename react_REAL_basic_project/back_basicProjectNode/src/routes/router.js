@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/getList', (req, res) => {
+router.post('/addList', (req, res) => {
   res.send('POST request to the homepage');
 });
 

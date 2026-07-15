@@ -1,46 +1,6 @@
 import { useState } from 'react';
-
-//Button
-function ButtonAddList() {
-
-  const [count, setCount] = useState(0);
-
-  function handleClick() {
-    setCount(count + 1);
-  }
-
-  return (
-    <button onClick={handleClick}>
-      Hiciste clic {count} veces
-    </button>
-  );
-}
-
-
-//List
-const names = [
-  {},
-];
-
-const products = [
-  { title: 'Col', isFruit: false, id: 1 },
-  { title: 'Ajo', isFruit: false, id: 2 },
-  { title: 'Manzana', isFruit: true, id: 3 },
-];
-
-function List() {
-  const listItems = names.map(name =>
-    <li
-      key={name.id}
-    >
-      {name.title}
-    </li>
-  );
-
-  return (
-    <ul>{listItems}</ul>
-  );
-}
+import Counter from './components/counter copy';
+import Form from './components/form'
 
 //Form
 function FormLink() {
@@ -124,6 +84,8 @@ function App() {
       <p>Insert a name. Then press the button to add it to a list.</p>
       <FormLink />
       <FormState />
+      <Counter />
+      <Form />
     </div>
   );
 }

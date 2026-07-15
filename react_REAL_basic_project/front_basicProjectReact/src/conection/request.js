@@ -1,0 +1,74 @@
+import http from 'http'
+
+
+
+function getData(options) {
+    return new Promise((resolve, reject) => {
+        let data = '';
+        console.log('EntraPromise 0');
+        const res = http.request(options, (res) => {
+            console.log('EntraReq 1');
+            res.on('data', (chunk) => {
+                console.log('Pasa 2');
+                data += chunk;
+                resolve(data) //return
+            });
+            res.on('connect', () => {
+                console.log("asdasda")
+            });
+            res.on('end', () => {
+                try { //actions
+                    console.log('Pasa 3');
+                    console.log("data " + data);
+                } catch (err) { //error handler
+                    console.log('EntraError3');
+                    reject(err);
+                }
+            });
+        });
+
+        res.on('error', (err) => { //another <error handler
+            reject(err);
+        });
+
+        console.log('CallReq');
+        res.end();
+    });
+}
+
+
+
+export async function llamadoHTTP(dataSend) {
+    console.log("entra llamado");
+    //Def http request
+    const options = {
+        hostname: '127.0.0.1',
+        port: 3001,
+        path: '/addList',
+        method: 'POST',
+        headers:
+            { 'Content-Type': 'text/html; charset=utf-8' },
+        data:dataSend
+    };
+
+    console.log("llamadoData");
+    var num = await getData(options)
+    console.log("num" + num)
+
+    return num
+
+}
+
+
+//main
+/*
+llamadoHTTP().then((v) => {
+    console.log("then")
+    console.log(v);
+    var a = parseInt(v)
+    var suma = 1 + a
+    console.log("suma = ", suma)
+    console.log("numero " + v)
+});
+*/
+

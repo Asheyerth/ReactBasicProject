@@ -1,6 +1,6 @@
 //Public routes
 const publicRoutes = [
-    '/getList'
+    '/addList'
     
 ];
 
