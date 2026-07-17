@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
-function useDataList(initialList = []) {
+//No se usa realmente 
+
+const useDataList = (initialList = []) => {
     const [dataListState, setdataListState] = useState(initialList); 
 
     const setDataList = (newList) => {
-        setDataList(newList);
+        setdataListState(dataListState => [...dataListState, newList]); //Update the list using the custom hook to get the data from the backend
     }
 
     const getDataList = () => {

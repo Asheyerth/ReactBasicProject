@@ -8,7 +8,7 @@ import useDataList from '../utils/hooks/useDataList'
 
 function Form() {
     const formRef = useRef(null) //To handle inner data from the form and to no recharge the page
-    const list = useSelector((state) => state.lista.value) //To get the state from the slicer from the store
+    var list = useSelector((state) => state.lista.value) //To get the state from the slicer from the store
     const dispatch = useDispatch()
     const dataList = useDataList() //Custom hook to get the data from the backend
 
@@ -30,8 +30,15 @@ function Form() {
             console.log(form)
 
             //Send the data to the backend using fetch
-            dispatch(createPost({form }));
-            dataList.setDataList(form) //Update the list using the custom hook to get the data from the backend
+            const res = await dispatch(createPost({"name": form }));
+            console.log("res")
+            console.log(res.payload.data)
+            console.log(JSON.stringify(res.payload.data))
+            var dataString = JSON.stringify(res.payload.data)
+            dataString = dataString.replace(/[\[\]"]/g, '') //Remove the brackets and quotes from the string
+            console.log("dataString")
+            console.log(dataString)
+            dataList.setDataList(JSON.stringify(res.payload.data)) //Update the list using the custom hook to get the data from the backend
         }
 
     }
@@ -65,6 +72,7 @@ function Form() {
                 <Boton label='Add name using link' callback={() => sendLink()} />
                 <Boton label='Add name using states' callback={() => sendState()} />
             </div>
+            <List lista={list}/>
             <List lista={dataList.getDataList()}/>
         </form>
     )
