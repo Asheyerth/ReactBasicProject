@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment } from '../store/counterSlice'
+import { decrement, increment } from '../utils/store/counterSlice'
 
 function Boton({ label = "", ariaLabel = "" , callback=null}) {
   return (

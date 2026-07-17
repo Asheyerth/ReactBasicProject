@@ -1,15 +1,16 @@
 import Boton from './button' //Import component
 import List from './list';
 import { useSelector, useDispatch } from 'react-redux'
-import { addListItem, deleteListItem} from '../store/listSlice' //Import functions from the SLice
+import { addListItem, deleteListItem} from '../utils/store/listSlice' //Import functions from the SLice
 import { useState, useRef } from 'react'
 import {createPost }from '../conection/postThunks'
-import {llamadoHTTP} from '../conection/requestNative'
+import useDataList from '../utils/hooks/useDataList'
 
 function Form() {
     const formRef = useRef(null) //To handle inner data from the form and to no recharge the page
     const list = useSelector((state) => state.lista.value) //To get the state from the slicer from the store
     const dispatch = useDispatch()
+    const dataList = useDataList() //Custom hook to get the data from the backend
 
     async function sendLink() {
         console.log("asassd")
@@ -30,7 +31,7 @@ function Form() {
 
             //Send the data to the backend using fetch
             dispatch(createPost({form }));
-            //fetch('/addList', { method: 'POST', body: formData.get('insertedName') }); 
+            dataList.setDataList(form) //Update the list using the custom hook to get the data from the backend
         }
 
     }
@@ -64,7 +65,7 @@ function Form() {
                 <Boton label='Add name using link' callback={() => sendLink()} />
                 <Boton label='Add name using states' callback={() => sendState()} />
             </div>
-            <List lista={list}/>
+            <List lista={dataList.getDataList()}/>
         </form>
     )
 }

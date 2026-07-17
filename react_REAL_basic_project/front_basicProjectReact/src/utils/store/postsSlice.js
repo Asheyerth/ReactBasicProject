@@ -1,5 +1,5 @@
 import {createSlice }from '@reduxjs/toolkit';
-import {createPost }from '../conection/postThunks';
+import {createPost }from '../../conection/postThunks';
 
 const initialState = {
   posts: [],

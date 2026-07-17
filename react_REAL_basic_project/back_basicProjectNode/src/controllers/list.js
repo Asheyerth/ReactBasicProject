@@ -13,26 +13,44 @@ class List {
         //this.filePath = '../database_xd/LetsImagineThisIsDynamo.csv';
         //const filePath = path.join(__dirname, 'config.json');
 
-        //Esto no debería existir xd
-        this.contador = 0
     }
 
     async addListItem(data_req) {
         //agregar item a la lista
         console.log("Entra a addListItem")
 
-        const data = this.contador + "," + data_req.name;
-        console.log("data: ", data)
-        await fs.appendFileSync(this.filePath, JSON.stringify({data}) + ",\n")
-        this.contador++; // Increment the counter after adding an item
+        //Esta parte es para conseguir el id. 
+        // NO debería ocurrir porque el ID es generado por la base de datos de forma automática autoincremental
+        const listaArrayJSON = await this.getList();
+        console.log("Contenido base de datos:")
+        for (let i = 0; i < listaArrayJSON.length; i++) {
+            console.log("listaArray[", i, "]: ", listaArrayJSON[i], +" , "+listaArrayJSON[i].id + " , " + listaArrayJSON[i].name)
+        }
+        const newId = listaArrayJSON.length + 1; // Generate a new ID based on the length of the array
+
+        //Data to add
+        const dataToWrite = `${newId},${data_req.name}\n`;
+        console.log("data: ", dataToWrite)
+
+        //Adding data
+        await fs.appendFileSync(this.filePath, dataToWrite)
+
+        return await this.getList(); // Return the updated list after adding the new item
+        //return null //to generate error
     }
 
     async getList() {
         //obtener lista
         console.log("Entra a getList")
         try {
-            const data = await readFile(this.filePath, { encoding: 'utf8' });
+            const data = await fs.readFileSync(this.filePath, 'utf8');
             console.log(data);
+            //return data
+            
+            return(data.split('\n').filter(line => line.trim() !== '').map(line => {
+                const [id, name] = line.split(',');
+                return { id: parseInt(id), name: name };
+            }));  //lo hizo la IA, está muy overkill .-. 
         } catch (err) {
             console.error('Error reading the file:', err.message);
         }
