@@ -3,6 +3,7 @@ import List from './list';
 import { useSelector, useDispatch } from 'react-redux'
 import { addListItem, deleteListItem} from '../store/listSlice' //Import functions from the SLice
 import { useState, useRef } from 'react'
+import {createPost }from '../conection/postThunks'
 import {llamadoHTTP} from '../conection/requestNative'
 
 function Form() {
@@ -22,9 +23,14 @@ function Form() {
             const formData = new FormData(formRef.current); //Creation of a maneable object of the inner data of the form
 
             console.log(formData)
+            const form = formData.get('insertedName');
 
-           //Send the data to the backend using fetch
-            fetch('/addList', { method: 'POST', body: formData.get('insertedName') }); 
+            console.log("Name")
+            console.log(form)
+
+            //Send the data to the backend using fetch
+            dispatch(createPost({form }));
+            //fetch('/addList', { method: 'POST', body: formData.get('insertedName') }); 
         }
 
     }

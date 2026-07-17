@@ -1,15 +1,14 @@
 //Public routes
 const publicRoutes = [
-    '/addList'
+    '/urls/addList',
+    '/urls/getList',
     
 ];
 
 const handler = async (req, res, next) => {
-    console.log("entra?")
+    console.log("entra handler middleware authentication")
     try {
         console.log(req.url)
-        console.log(publicRoutes.indexOf(req.url))
-        console.log(publicRoutes.indexOf(req.url) > -1)
         if (publicRoutes.indexOf(req.url) > -1) {
             next();
             return;
