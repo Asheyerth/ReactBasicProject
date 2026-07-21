@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
-function List({lista = []}) {
+function List({lista = [], label = "Lista"}) {
     const [listName, setListName] = useState([]); //in normal cases, this is used
 
     return (
         <div>
-            <label>Lista:</label>
+            <label>{label}:</label>
             {[...lista].map((item, index) => (
                 <li key={index}>
                     {index}.{item}

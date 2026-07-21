@@ -34,11 +34,7 @@ function Form() {
             console.log("res")
             console.log(res.payload.data)
             console.log(JSON.stringify(res.payload.data))
-            var dataString = JSON.stringify(res.payload.data)
-            dataString = dataString.replace(/[\[\]"]/g, '') //Remove the brackets and quotes from the string
-            console.log("dataString")
-            console.log(dataString)
-            dataList.setDataList(JSON.stringify(res.payload.data)) //Update the list using the custom hook to get the data from the backend
+            dataList.setDataList(res.payload.data) //Update the list using the custom hook to get the data from the backend
         }
 
     }
@@ -72,8 +68,8 @@ function Form() {
                 <Boton label='Add name using link' callback={() => sendLink()} />
                 <Boton label='Add name using states' callback={() => sendState()} />
             </div>
-            <List lista={list}/>
-            <List lista={dataList.getDataList()}/>
+            <List lista={list} label="Lista usando states" />
+            <List lista={dataList.getDataList()} label="Lista usando backend" />
         </form>
     )
 }
